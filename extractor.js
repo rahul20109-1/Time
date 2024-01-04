@@ -1,7 +1,7 @@
 function getPostId() {
-  const linkedinURL= document.querySelector("#url").value;
-  const regex = /([0-9]{19})/;
-  const postId = regex.exec(linkedinURL).pop();
+  const linkedinURL = document.querySelector("#url").value;
+  const regex = /\/(\d{19})/;
+  const postId = regex.exec(linkedinURL)[1];
   return postId;
 }
 
@@ -17,13 +17,14 @@ function unixTimestampToHumanDate(timestamp) {
   const dateObject = new Date(timestamp);
   dateObject.setUTCHours(dateObject.getUTCHours() + 5);
   dateObject.setUTCMinutes(dateObject.getUTCMinutes() + 30);
+  
   // Extract individual components for 12-hour format
-  const hours12 = dateObject.getHours() % 12 || 12; // Convert 0 to 12
+  const hours12 = (dateObject.getHours() % 12) || 12; // Convert 0 to 12
   const minutes = dateObject.getMinutes();
   const ampm = dateObject.getHours() >= 12 ? 'PM' : 'AM';
-  
+
   // Format the date to a human-readable string in 12-hour format
-  const humanDateFormat = `${dateObject.toDateString()} ${hours12}:${minutes < 10 ? '0' : ''}${minutes} ${ampm} (Indian1 Standard Time)`;
+  const humanDateFormat = `${dateObject.toLocaleDateString()} ${hours12}:${minutes < 10 ? '0' : ''}${minutes} ${ampm} (Indian Standard Time)`;
   
   return humanDateFormat;
 }
